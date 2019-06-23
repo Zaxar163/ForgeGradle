@@ -38,7 +38,9 @@ public class TestMergeJars extends TaskTest<MergeJars>
     private static Closure<File> fileClosure(File f) {
         return new Closure<File>(null)
         {
-            @Override
+			private static final long serialVersionUID = 4890472900855018806L;
+
+			@Override
             public File call()
             {
                 return f;

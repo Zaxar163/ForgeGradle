@@ -19,18 +19,9 @@
  */
 package net.minecraftforge.gradle.user.patcherUser.forge;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
-
-import com.google.common.base.Strings;
-
 import net.minecraftforge.gradle.common.Constants;
 import net.minecraftforge.gradle.user.UserBaseExtension;
 import net.minecraftforge.gradle.user.UserBasePlugin;
-import net.minecraftforge.gradle.util.GradleConfigurationException;
 
 public class ForgeExtension extends UserBaseExtension
 {
@@ -91,11 +82,6 @@ public class ForgeExtension extends UserBaseExtension
     // Code to check the forge version and stuff
     // ----------------------------------------
 
-    private static final String  JUST_MC  = "(\\d+\\.\\d+(?:\\.\\d+)?[_pre\\d]*)";
-    private static final String  JUST_API = "((?:\\d+\\.){3}(\\d+))((?:-[\\w\\.]+)?)";
-    private static final Pattern API      = Pattern.compile(JUST_API);
-    private static final Pattern STANDARD = Pattern.compile(JUST_MC + "-" + JUST_API);
-    private static final Logger  LOGGER   = Logging.getLogger(ForgeExtension.class);
 
     private void checkAndSetVersion(String str)
     {

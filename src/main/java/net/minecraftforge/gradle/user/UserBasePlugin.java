@@ -247,7 +247,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC));
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC_DEPS));
             exec.classpath(project.getConfigurations().getByName(CONFIG_START));
-            exec.classpath(jarTask.getArchivePath());
+            exec.classpath(jarTask.getArchiveFile().get().getAsFile());
             exec.dependsOn(jarTask);
             exec.jvmArgs(getClientJvmArgs(getExtension()));
             exec.args(getClientRunArgs(getExtension()));
@@ -260,7 +260,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC));
             exec.classpath(project.getConfigurations().getByName(CONFIG_MC_DEPS));
             exec.classpath(project.getConfigurations().getByName(CONFIG_START));
-            exec.classpath(jarTask.getArchivePath());
+            exec.classpath(jarTask.getArchiveFile().get().getAsFile());
             exec.dependsOn(jarTask);
             exec.jvmArgs(getServerJvmArgs(getExtension()));
             exec.args(getServerRunArgs(getExtension()));
@@ -523,7 +523,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
                 .plus(project.getConfigurations().getByName(CONFIG_MC))
                 .plus(project.getConfigurations().getByName(CONFIG_MC_DEPS)));
 
-        project.getConfigurations().getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME).extendsFrom(project.getConfigurations().getByName(CONFIG_DC_RESOLVED));
+        project.getConfigurations().getByName("compile").extendsFrom(project.getConfigurations().getByName(CONFIG_DC_RESOLVED));
         project.getConfigurations().getByName(CONFIG_PROVIDED).extendsFrom(project.getConfigurations().getByName(CONFIG_DP_RESOLVED));
         project.getConfigurations().getByName(api.getCompileConfigurationName()).extendsFrom(project.getConfigurations().getByName("compile"));
         project.getConfigurations().getByName(JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME).extendsFrom(project.getConfigurations().getByName("apiCompile"));
@@ -532,7 +532,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
         javadoc.setClasspath(main.getOutput().plus(main.getCompileClasspath()));
 
         // libs folder dependencies
-        project.getDependencies().add(JavaPlugin.COMPILE_CONFIGURATION_NAME, project.fileTree("libs"));
+        project.getDependencies().add("compile", project.fileTree("libs"));
 
         // set the compile target
         javaConv.setSourceCompatibility("1.8");
@@ -861,7 +861,7 @@ public abstract class UserBasePlugin<T extends UserBaseExtension> extends BasePl
         final Jar sourceJar = makeTask(TASK_SRC_JAR, Jar.class);
         final String retromappedSrc = getSourceSetFormatted(main, TMPL_RETROMAPED_RPL);
         sourceJar.from(main.getOutput().getResourcesDir());
-        sourceJar.setClassifier("sources");
+        sourceJar.getArchiveClassifier().set("sources");
         sourceJar.dependsOn(main.getCompileJavaTaskName(), main.getProcessResourcesTaskName(), getSourceSetFormatted(main, TMPL_TASK_RETROMAP_RPL));
 
         sourceJar.from(new Closure<Object>(UserBasePlugin.class) {
