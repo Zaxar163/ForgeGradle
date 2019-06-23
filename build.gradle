@@ -166,11 +166,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = "javadoc"
 }
 
-artifacts {
-    archives jar
-    //archives javadocJar
-}
-
 test {
     if (project.hasProperty("filesmaven")) // disable this test when on the forge jenkins
         exclude "**/ExtensionMcpMappingTest*"
@@ -231,10 +226,12 @@ pluginBundle {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifact jar
             pom {
                 groupId = project.group
                 version = project.version
                 artifactId = project.archivesBaseName
+
             }
         }
     }
