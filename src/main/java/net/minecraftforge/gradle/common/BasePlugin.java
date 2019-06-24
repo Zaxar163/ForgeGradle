@@ -215,7 +215,7 @@ public abstract class BasePlugin<K extends BaseExtension> implements Plugin<Proj
 
     public abstract void applyPlugin();
 
-    private static boolean displayBanner = true;
+    private static boolean displayBanner = false;
 
     private void getRemoteJsons()
     {
